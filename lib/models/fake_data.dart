@@ -5,6 +5,8 @@ Map homePagePosterMap = {
 
 };
 
+List<HashTagModel> myCatList = [];
+
 //blog fake data
 List<HashTagModel> tagList = [
   HashTagModel(title: "جاوا"),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:techblog/my_colors.dart';
-import 'package:techblog/view/register_intro.dart';
+import 'package:techblog/view/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -120,7 +120,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: splashScreen(),
       //   );
-      home: RegisterIntro(),
+      home: home(),
     );
   }
 }

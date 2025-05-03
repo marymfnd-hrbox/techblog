@@ -3,6 +3,7 @@ import 'package:techblog/gen/assets.gen.dart';
 import 'package:techblog/my_colors.dart';
 import 'package:techblog/view/home_screen.dart';
 import 'package:techblog/view/profile_screen.dart';
+import 'package:techblog/view/register_intro.dart';
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -10,9 +11,10 @@ class home extends StatefulWidget {
   @override
   State<home> createState() => _homeState();
 }
-
+final GlobalKey<ScaffoldState> _key = GlobalKey();
 class _homeState extends State<home> {
   var selectedPageIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +23,56 @@ class _homeState extends State<home> {
     double bodyMargin = size.width / 10;
 
     return Scaffold(
+      key: _key,
+      drawer: Drawer(
+        backgroundColor: SolidColors.scaffoldBg,
+        child: Padding(
+          padding: EdgeInsets.only(right: bodyMargin, left: bodyMargin),
+          child: ListView(
+            children: [
+              DrawerHeader(
+                child: Center(
+                  child: Image.asset(Assets.images.splashScreen.path, scale: 3),
+                ),
+              ),
+              ListTile(
+                title: Text("پروفایل کاربری", style: theme.displaySmall),
+                onTap: () {},
+              ),
+              Divider(color: SolidColors.dividerColor),
+              ListTile(
+                title: Text("درباره تک بلاگ", style: theme.displaySmall),
+                onTap: () {},
+              ),
+              Divider(color: SolidColors.dividerColor),
+              ListTile(
+                title: Text("اشتراک گذاری تک بلاگ", style: theme.displaySmall),
+                onTap: () {},
+              ),
+              Divider(color: SolidColors.dividerColor),
+              ListTile(
+                title: Text("تک بلاگ در گیت هاب", style: theme.displaySmall),
+                onTap: () {},
+              ),
+              Divider(color: SolidColors.dividerColor),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: SolidColors.scaffoldBg,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Icon(Icons.menu, color: Colors.black),
+            InkWell(child: Icon(Icons.menu, color: Colors.black),
+            onTap: (){
+              _key.currentState!.openDrawer();
+            },),
+
             Assets.images.splashScreen.image(height: size.height / 13.6),
+
             Icon(Icons.search, color: Colors.black),
           ],
         ),
@@ -40,6 +84,7 @@ class _homeState extends State<home> {
             children: [
               homeScreen(size: size, theme: theme, bodyMargin: bodyMargin),
               profileScreen(size: size, theme: theme, bodyMargin: bodyMargin),
+              RegisterIntro(),
             ],
           ),
 

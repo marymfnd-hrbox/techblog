@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:techblog/gen/assets.gen.dart';
 import 'package:techblog/models/fake_data.dart';
-import 'package:techblog/my_colors.dart';
-import 'package:techblog/my_component.dart';
-import 'package:techblog/my_strings.dart';
+import 'package:techblog/component/my_colors.dart';
+import 'package:techblog/component/my_component.dart';
+import 'package:techblog/component/my_strings.dart';
 
 class homeScreen extends StatelessWidget {
   const homeScreen({
@@ -28,24 +28,32 @@ class homeScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 8),
-                
+
                 ///// Poster
                 homePagePoster(size: size, theme: theme),
                 SizedBox(height: 16),
-    
+
                 ///// TagList
                 homePageTaglist(bodyMargin: bodyMargin, theme: theme),
                 SizedBox(height: 32),
-    
+
                 // Top Articles
                 seeMoreBlog(bodyMargin: bodyMargin, theme: theme),
-                homePageBlogList(size: size, bodyMargin: bodyMargin, theme: theme),
-    
+                homePageBlogList(
+                  size: size,
+                  bodyMargin: bodyMargin,
+                  theme: theme,
+                ),
+
                 // Top Podcasts
                 seeMorePodcast(bodyMargin: bodyMargin, theme: theme),
-                homePagePodcastList(size: size, bodyMargin: bodyMargin, theme: theme),
-              
-                SizedBox(height: 60,)
+                homePagePodcastList(
+                  size: size,
+                  bodyMargin: bodyMargin,
+                  theme: theme,
+                ),
+
+                SizedBox(height: 60),
               ],
             ),
           ),
@@ -71,7 +79,7 @@ class homePagePodcastList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: size.height / 3.5,
-        
+
       child: ListView.builder(
         itemCount: blogList.length,
         scrollDirection: Axis.horizontal,
@@ -80,12 +88,10 @@ class homePagePodcastList extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
-        
+
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    right: index == 0 ? bodyMargin : 15,
-                  ),
-        
+                  padding: EdgeInsets.only(right: index == 0 ? bodyMargin : 15),
+
                   child: SizedBox(
                     height: size.height / 5.3,
                     width: size.width / 2.2,
@@ -93,20 +99,14 @@ class homePagePodcastList extends StatelessWidget {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(16),
-                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
                             image: DecorationImage(
-                              image: NetworkImage(
-                                blogList[index].imageUrl,
-                              ),
+                              image: NetworkImage(blogList[index].imageUrl),
                               fit: BoxFit.cover,
                             ),
                           ),
                           foregroundDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(16),
-                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
                             gradient: LinearGradient(
                               colors: GradientColors.blogPost,
                               begin: Alignment.bottomCenter,
@@ -114,14 +114,13 @@ class homePagePodcastList extends StatelessWidget {
                             ),
                           ),
                         ),
-        
+
                         Positioned(
                           bottom: 8,
                           left: 0,
                           right: 0,
                           child: Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
                                 blogList[index].writer,
@@ -140,9 +139,7 @@ class homePagePodcastList extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
-                  right: index == 0 ? bodyMargin : 15,
-                ),
+                padding: EdgeInsets.only(right: index == 0 ? bodyMargin : 15),
                 child: SizedBox(
                   width: size.width / 2.4,
                   child: Text(
@@ -181,10 +178,7 @@ class seeMorePodcast extends StatelessWidget {
             color: SolidColors.seeMore,
           ),
           SizedBox(width: 8),
-          Text(
-            MyStrings.viewHotestPodCasts,
-            style: theme.headlineLarge,
-          ),
+          Text(MyStrings.viewHotestPodCasts, style: theme.headlineLarge),
         ],
       ),
     );
@@ -207,7 +201,7 @@ class homePageBlogList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: size.height / 3.5,
-        
+
       child: ListView.builder(
         itemCount: blogList.length,
         scrollDirection: Axis.horizontal,
@@ -216,12 +210,10 @@ class homePageBlogList extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
-        
+
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    right: index == 0 ? bodyMargin : 15,
-                  ),
-        
+                  padding: EdgeInsets.only(right: index == 0 ? bodyMargin : 15),
+
                   child: SizedBox(
                     height: size.height / 5.3,
                     width: size.width / 2.2,
@@ -229,20 +221,14 @@ class homePageBlogList extends StatelessWidget {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(16),
-                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
                             image: DecorationImage(
-                              image: NetworkImage(
-                                blogList[index].imageUrl,
-                              ),
+                              image: NetworkImage(blogList[index].imageUrl),
                               fit: BoxFit.cover,
                             ),
                           ),
                           foregroundDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(16),
-                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
                             gradient: LinearGradient(
                               colors: GradientColors.blogPost,
                               begin: Alignment.bottomCenter,
@@ -250,14 +236,13 @@ class homePageBlogList extends StatelessWidget {
                             ),
                           ),
                         ),
-        
+
                         Positioned(
                           bottom: 8,
                           left: 0,
                           right: 0,
                           child: Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
                                 blogList[index].writer,
@@ -276,9 +261,7 @@ class homePageBlogList extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(
-                  right: index == 0 ? bodyMargin : 15,
-                ),
+                padding: EdgeInsets.only(right: index == 0 ? bodyMargin : 15),
                 child: SizedBox(
                   width: size.width / 2.4,
                   child: Text(
@@ -297,11 +280,7 @@ class homePageBlogList extends StatelessWidget {
 }
 
 class seeMoreBlog extends StatelessWidget {
-  const seeMoreBlog({
-    super.key,
-    required this.bodyMargin,
-    required this.theme,
-  });
+  const seeMoreBlog({super.key, required this.bodyMargin, required this.theme});
 
   final double bodyMargin;
   final TextTheme theme;
@@ -317,10 +296,7 @@ class seeMoreBlog extends StatelessWidget {
             color: SolidColors.seeMore,
           ),
           SizedBox(width: 8),
-          Text(
-            MyStrings.viewHotestBlog,
-            style: theme.headlineLarge,
-          ),
+          Text(MyStrings.viewHotestBlog, style: theme.headlineLarge),
         ],
       ),
     );
@@ -341,18 +317,13 @@ class homePageTaglist extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 60,
-        
+
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: tagList.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.fromLTRB(
-              0,
-              8,
-              index == 0 ? bodyMargin : 15,
-              8,
-            ),
+            padding: EdgeInsets.fromLTRB(0, 8, index == 0 ? bodyMargin : 15, 8),
             child: MainTags(theme: theme, index: index),
           );
         },
@@ -361,14 +332,8 @@ class homePageTaglist extends StatelessWidget {
   }
 }
 
-
-
 class homePagePoster extends StatelessWidget {
-  const homePagePoster({
-    super.key,
-    required this.size,
-    required this.theme,
-  });
+  const homePagePoster({super.key, required this.size, required this.theme});
 
   final Size size;
   final TextTheme theme;
@@ -386,9 +351,7 @@ class homePagePoster extends StatelessWidget {
               image: Assets.images.posterTest.provider(),
             ),
             color: Colors.black12,
-            borderRadius: BorderRadius.all(
-              Radius.circular(16),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
           foregroundDecoration: BoxDecoration(
             gradient: LinearGradient(
@@ -396,9 +359,7 @@ class homePagePoster extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(16),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
         ),
         Positioned(
@@ -408,20 +369,16 @@ class homePagePoster extends StatelessWidget {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    "ملیکا عزیزی - یک روز پیش",
-                    style: theme.headlineSmall,
-                  ),
-                  Text(
-                    "Like 253",
-                    style: theme.displayMedium,
-                  ),
+                  Text("ملیکا عزیزی - یک روز پیش", style: theme.headlineSmall),
+                  Text("Like 253", style: theme.displayMedium),
                 ],
               ),
-              Text("اولین مقاله ی هوش مصنوعی در زمینه فیزیک", style: theme.headlineMedium),
+              Text(
+                "اولین مقاله ی هوش مصنوعی در زمینه فیزیک",
+                style: theme.headlineMedium,
+              ),
             ],
           ),
         ),

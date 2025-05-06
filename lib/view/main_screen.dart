@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:techblog/gen/assets.gen.dart';
-import 'package:techblog/my_colors.dart';
+import 'package:techblog/component/my_colors.dart';
 import 'package:techblog/view/home_screen.dart';
 import 'package:techblog/view/profile_screen.dart';
 import 'package:techblog/view/register_intro.dart';
@@ -11,10 +11,11 @@ class home extends StatefulWidget {
   @override
   State<home> createState() => _homeState();
 }
+
 final GlobalKey<ScaffoldState> _key = GlobalKey();
+
 class _homeState extends State<home> {
   var selectedPageIndex = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +67,12 @@ class _homeState extends State<home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            InkWell(child: Icon(Icons.menu, color: Colors.black),
-            onTap: (){
-              _key.currentState!.openDrawer();
-            },),
+            InkWell(
+              child: Icon(Icons.menu, color: Colors.black),
+              onTap: () {
+                _key.currentState!.openDrawer();
+              },
+            ),
 
             Assets.images.splashScreen.image(height: size.height / 13.6),
 

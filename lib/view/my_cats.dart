@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:techblog/gen/assets.gen.dart';
 import 'package:techblog/models/fake_data.dart';
-import 'package:techblog/my_colors.dart';
-import 'package:techblog/my_component.dart';
-import 'package:techblog/my_strings.dart';
+import 'package:techblog/component/my_colors.dart';
+import 'package:techblog/component/my_component.dart';
+import 'package:techblog/component/my_strings.dart';
 
 class MyCats extends StatefulWidget {
   const MyCats({super.key});
@@ -74,10 +74,10 @@ class _MyCatsState extends State<MyCats> {
                           onTap: () {
                             setState(() {
                               if (!myCatList.contains(tagList[index])) {
-                                    myCatList.add(tagList[index]);
-                                  } else {
-                                    debugPrint("${tagList[index].title} exist");
-                                  }
+                                myCatList.add(tagList[index]);
+                              } else {
+                                debugPrint("${tagList[index].title} exist");
+                              }
                             });
                           },
                           child: MainTags(theme: theme, index: index),
@@ -88,7 +88,7 @@ class _MyCatsState extends State<MyCats> {
                 ),
 
                 SizedBox(height: 20),
-                
+
                 Image.asset(Assets.icons.downCatArrow.path, scale: 2),
 
                 Padding(
@@ -112,7 +112,7 @@ class _MyCatsState extends State<MyCats> {
                           height: 60,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(24)),
-                            color: SolidColors.surface
+                            color: SolidColors.surface,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
@@ -130,10 +130,12 @@ class _MyCatsState extends State<MyCats> {
                                       myCatList.removeAt(index);
                                     });
                                   },
-                                  child: Icon(CupertinoIcons.delete,
-                                  color: SolidColors.greyColor,
-                                  size: 20,),
-                                )
+                                  child: Icon(
+                                    CupertinoIcons.delete,
+                                    color: SolidColors.greyColor,
+                                    size: 20,
+                                  ),
+                                ),
                               ],
                             ),
                           ),

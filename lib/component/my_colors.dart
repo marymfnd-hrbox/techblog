@@ -8,8 +8,12 @@ class SolidColors {
   static const Color textTitle = Color.fromARGB(255, 0, 0, 0);
   static const Color scaffoldBg = Color.fromARGB(255, 255, 255, 255);
   static const Color statusBarColor = Color.fromARGB(255, 255, 255, 255);
-  static const Color systemNavigationBarColor =
-      Color.fromARGB(255, 255, 255, 255);
+  static const Color systemNavigationBarColor = Color.fromARGB(
+    255,
+    255,
+    255,
+    255,
+  );
   static const Color lightText = Color.fromARGB(255, 255, 255, 255);
   static const Color selectedPodCast = Color.fromARGB(255, 255, 139, 26);
   static const Color submitArticle = Color.fromARGB(255, 209, 209, 209);
@@ -26,44 +30,34 @@ class SolidColors {
   static const Color yelowColor = Color.fromARGB(255, 255, 235, 59);
   static const Color erorColor = Color.fromARGB(255, 227, 10, 10);
   static const Color lightBackColor = Color.fromARGB(255, 255, 255, 255);
-  static const Color minutesColorColor =  Color.fromARGB(255, 203, 202, 202);
-  
+  static const Color minutesColorColor = Color.fromARGB(255, 203, 202, 202);
 }
 
 class GradientColors {
   static const List<Color> bottomNav = [
     Color.fromARGB(255, 25, 0, 94),
-    Color.fromARGB(255, 68, 4, 87)
+    Color.fromARGB(255, 68, 4, 87),
   ];
   static const List<Color> bottomNavBackground = [
     Color.fromARGB(0, 255, 255, 255),
-    Color.fromARGB(255, 255, 255, 255)
+    Color.fromARGB(255, 255, 255, 255),
   ];
   static const List<Color> tags = [
     Color.fromARGB(255, 0, 0, 0),
-    Color.fromARGB(255, 63, 63, 63)
+    Color.fromARGB(255, 63, 63, 63),
   ];
   static const List<Color> blogPost = [
     Color.fromARGB(255, 0, 0, 0),
-    Color.fromARGB(0, 0, 0, 0)
+    Color.fromARGB(0, 0, 0, 0),
   ];
   static const List<Color> homePosterCoverGradiant = [
     Color.fromARGB(0, 0, 0, 0),
     Color.fromARGB(195, 72, 20, 88),
-    Color.fromARGB(255, 280, 20, 81)
+    Color.fromARGB(255, 280, 20, 81),
   ];
 
   static const List<Color> singleAppbarGradiant = [
     Color.fromARGB(255, 46, 3, 71),
-    Color.fromARGB(0, 0, 0, 0)
+    Color.fromARGB(0, 0, 0, 0),
   ];
-
- 
 }
- 
-
-  
- 
- 
-
- 

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:techblog/gen/assets.gen.dart';
 import 'package:techblog/models/fake_data.dart';
-import 'package:techblog/my_colors.dart';
+import 'package:techblog/component/my_colors.dart';
 
 class techDivider extends StatelessWidget {
-  const techDivider({
-    super.key,
-    required this.size,
-  });
+  const techDivider({super.key, required this.size});
 
   final Size size;
 
@@ -16,19 +13,14 @@ class techDivider extends StatelessWidget {
     return Divider(
       thickness: 1.5,
       color: SolidColors.dividerColor,
-      indent: size.width/6,
-      endIndent: size.width/6,
+      indent: size.width / 6,
+      endIndent: size.width / 6,
     );
   }
 }
 
-
 class MainTags extends StatelessWidget {
-  MainTags({
-    super.key,
-    required this.theme,
-    required this.index
-  });
+  MainTags({super.key, required this.theme, required this.index});
 
   final TextTheme theme;
   var index;
@@ -38,9 +30,7 @@ class MainTags extends StatelessWidget {
     return Container(
       height: 60,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(24),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(24)),
         gradient: LinearGradient(
           colors: GradientColors.tags,
           begin: Alignment.centerRight,
@@ -48,12 +38,7 @@ class MainTags extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          16,
-          8,
-          8,
-          8,
-        ),
+        padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
         child: Row(
           children: [
             ImageIcon(

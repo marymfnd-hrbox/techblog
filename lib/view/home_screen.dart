@@ -1,12 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
+import 'package:techblog/controller/home_screen_controller.dart';
 import 'package:techblog/gen/assets.gen.dart';
 import 'package:techblog/models/fake_data.dart';
-import 'package:techblog/component/my_colors.dart';
+import 'package:techblog/constant/my_colors.dart';
 import 'package:techblog/component/my_component.dart';
-import 'package:techblog/component/my_strings.dart';
+import 'package:techblog/constant/my_strings.dart';
 
 class homeScreen extends StatelessWidget {
-  const homeScreen({
+  homeScreen({
     super.key,
     required this.size,
     required this.theme,
@@ -16,143 +20,282 @@ class homeScreen extends StatelessWidget {
   final Size size;
   final TextTheme theme;
   final double bodyMargin;
+  HomeScreenController homeScreenController = Get.put(HomeScreenController());
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-            child: Column(
-              children: [
-                SizedBox(height: 8),
+    Widget topPodcasts() {
+      return SizedBox(
+        height: size.height / 3.5,
 
-                ///// Poster
-                homePagePoster(size: size, theme: theme),
-                SizedBox(height: 16),
+        child: Obx(
+          () => ListView.builder(
+            itemCount: homeScreenController.topPodcastList.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
 
-                ///// TagList
-                homePageTaglist(bodyMargin: bodyMargin, theme: theme),
-                SizedBox(height: 32),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        right: index == 0 ? bodyMargin : 15,
+                      ),
 
-                // Top Articles
-                seeMoreBlog(bodyMargin: bodyMargin, theme: theme),
-                homePageBlogList(
-                  size: size,
-                  bodyMargin: bodyMargin,
-                  theme: theme,
+                      child: SizedBox(
+                        height: size.height / 5.3,
+                        width: size.width / 2.2,
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              homeScreenController
+                                  .topPodcastList[index]
+                                  .poster!,
+                          imageBuilder:
+                              ((context, imageProvider) => Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(16),
+                                  ),
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              )),
+
+                          placeholder:
+                              (context, url) => SpinKitFadingCube(
+                                color: SolidColors.primaryColor,
+                                size: 32,
+                              ),
+
+                          errorWidget:
+                              (context, url, error) => Icon(
+                                Icons.image_not_supported_outlined,
+                                size: 50,
+                                color: Colors.grey,
+                              ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      right: index == 0 ? bodyMargin : 15,
+                    ),
+                    child: SizedBox(
+                      width: size.width / 2.4,
+                      child: Text(
+                        homeScreenController.topPodcastList[index].title!,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      );
+    }
+
+    Widget topVisited() {
+      return SizedBox(
+        height: size.height / 3.5,
+
+        child: Obx(
+          () => ListView.builder(
+            itemCount: homeScreenController.topVisitedList.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        right: index == 0 ? bodyMargin : 15,
+                      ),
+
+                      child: SizedBox(
+                        height: size.height / 5.3,
+                        width: size.width / 2.2,
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(16),
+                                ),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    homeScreenController
+                                        .topVisitedList[index]
+                                        .image!,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              foregroundDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(16),
+                                ),
+                                gradient: LinearGradient(
+                                  colors: GradientColors.blogPost,
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                ),
+                              ),
+                            ),
+
+                            Positioned(
+                              bottom: 8,
+                              left: 0,
+                              right: 0,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text(
+                                    homeScreenController
+                                        .topVisitedList[index]
+                                        .author!,
+                                    style: theme.headlineSmall,
+                                  ),
+                                  Text(
+                                    homeScreenController
+                                        .topVisitedList[index]
+                                        .view!,
+                                    style: theme.displayMedium,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      right: index == 0 ? bodyMargin : 15,
+                    ),
+                    child: SizedBox(
+                      width: size.width / 2.4,
+                      child: Text(
+                        homeScreenController.topVisitedList[index].title!,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      );
+    }
+
+    Widget poster() {
+      return Obx(
+        () => Stack(
+          children: [
+            Container(
+              width: size.width / 1.25,
+              height: size.height / 4.2,
+              foregroundDecoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: GradientColors.homePosterCoverGradiant,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+              ),
+              child: homeScreenController.loading.value==false? CachedNetworkImage(
+                imageUrl:  homeScreenController.poster.value.image!,
+                imageBuilder:
+                    ((context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )),
 
-                // Top Podcasts
-                seeMorePodcast(bodyMargin: bodyMargin, theme: theme),
-                homePagePodcastList(
-                  size: size,
-                  bodyMargin: bodyMargin,
-                  theme: theme,
+                placeholder:
+                    (context, url) => SpinKitFadingCube(
+                      color: SolidColors.primaryColor,
+                      size: 32,
+                    ),
+
+                errorWidget:
+                    (context, url, error) => Icon(
+                      Icons.image_not_supported_outlined,
+                      size: 50,
+                      color: Colors.grey,
+                    ),
+              ): Loading(),
+            ),
+            Positioned(
+              bottom: 8,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  homeScreenController.loading.value == false? Text(homeScreenController.poster.value.title!,
+                  style: theme.headlineMedium,): Loading()
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                child: Column(
+                  children: [
+                    SizedBox(height: 8),
+
+                    ///// Poster
+                    poster(),
+                    SizedBox(height: 16),
+
+                    ///// TagList
+                    homePageTaglist(bodyMargin: bodyMargin, theme: theme),
+                    SizedBox(height: 32),
+
+                    // Top Articles
+                    seeMoreBlog(bodyMargin: bodyMargin, theme: theme),
+
+                    topVisited(),
+
+                    // Top Podcasts
+                    seeMorePodcast(bodyMargin: bodyMargin, theme: theme),
+
+                    topPodcasts(),
+
+                    SizedBox(height: 60),
+                  ],
                 ),
-
-                SizedBox(height: 60),
-              ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class homePagePodcastList extends StatelessWidget {
-  const homePagePodcastList({
-    super.key,
-    required this.size,
-    required this.bodyMargin,
-    required this.theme,
-  });
-
-  final Size size;
-  final double bodyMargin;
-  final TextTheme theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: size.height / 3.5,
-
-      child: ListView.builder(
-        itemCount: blogList.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(8.0),
-
-                child: Padding(
-                  padding: EdgeInsets.only(right: index == 0 ? bodyMargin : 15),
-
-                  child: SizedBox(
-                    height: size.height / 5.3,
-                    width: size.width / 2.2,
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(16)),
-                            image: DecorationImage(
-                              image: NetworkImage(blogList[index].imageUrl),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          foregroundDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(16)),
-                            gradient: LinearGradient(
-                              colors: GradientColors.blogPost,
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
-                          ),
-                        ),
-
-                        Positioned(
-                          bottom: 8,
-                          left: 0,
-                          right: 0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                blogList[index].writer,
-                                style: theme.headlineSmall,
-                              ),
-                              Text(
-                                blogList[index].views,
-                                style: theme.displayMedium,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(right: index == 0 ? bodyMargin : 15),
-                child: SizedBox(
-                  width: size.width / 2.4,
-                  child: Text(
-                    blogList[index].title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+      ],
     );
   }
 }
@@ -180,100 +323,6 @@ class seeMorePodcast extends StatelessWidget {
           SizedBox(width: 8),
           Text(MyStrings.viewHotestPodCasts, style: theme.headlineLarge),
         ],
-      ),
-    );
-  }
-}
-
-class homePageBlogList extends StatelessWidget {
-  const homePageBlogList({
-    super.key,
-    required this.size,
-    required this.bodyMargin,
-    required this.theme,
-  });
-
-  final Size size;
-  final double bodyMargin;
-  final TextTheme theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: size.height / 3.5,
-
-      child: ListView.builder(
-        itemCount: blogList.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(8.0),
-
-                child: Padding(
-                  padding: EdgeInsets.only(right: index == 0 ? bodyMargin : 15),
-
-                  child: SizedBox(
-                    height: size.height / 5.3,
-                    width: size.width / 2.2,
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(16)),
-                            image: DecorationImage(
-                              image: NetworkImage(blogList[index].imageUrl),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          foregroundDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(16)),
-                            gradient: LinearGradient(
-                              colors: GradientColors.blogPost,
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
-                          ),
-                        ),
-
-                        Positioned(
-                          bottom: 8,
-                          left: 0,
-                          right: 0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                blogList[index].writer,
-                                style: theme.headlineSmall,
-                              ),
-                              Text(
-                                blogList[index].views,
-                                style: theme.displayMedium,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(right: index == 0 ? bodyMargin : 15),
-                child: SizedBox(
-                  width: size.width / 2.4,
-                  child: Text(
-                    blogList[index].title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
       ),
     );
   }
@@ -328,61 +377,6 @@ class homePageTaglist extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-}
-
-class homePagePoster extends StatelessWidget {
-  const homePagePoster({super.key, required this.size, required this.theme});
-
-  final Size size;
-  final TextTheme theme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: size.width / 1.25,
-          height: size.height / 4.2,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: Assets.images.posterTest.provider(),
-            ),
-            color: Colors.black12,
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
-          foregroundDecoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: GradientColors.homePosterCoverGradiant,
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
-        ),
-        Positioned(
-          bottom: 8,
-          left: 0,
-          right: 0,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text("ملیکا عزیزی - یک روز پیش", style: theme.headlineSmall),
-                  Text("Like 253", style: theme.displayMedium),
-                ],
-              ),
-              Text(
-                "اولین مقاله ی هوش مصنوعی در زمینه فیزیک",
-                style: theme.headlineMedium,
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:techblog/gen/assets.gen.dart';
 import 'package:techblog/models/fake_data.dart';
-import 'package:techblog/component/my_colors.dart';
+import 'package:techblog/constant/my_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class techDivider extends StatelessWidget {
   const techDivider({super.key, required this.size});
@@ -56,5 +58,25 @@ class MainTags extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+myLaunchUrl(String url) async {
+  var uri = Uri.parse(url);
+
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    // ignore: avoid_print
+    print("Could not launch $url");
+  }
+}
+
+class Loading extends StatelessWidget {
+  const Loading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: SpinKitFadingCube(color: SolidColors.primaryColor, size: 32));
   }
 }

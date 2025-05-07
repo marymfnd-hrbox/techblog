@@ -2,7 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:techblog/gen/assets.gen.dart';
-import 'package:techblog/component/my_strings.dart';
+import 'package:techblog/constant/my_strings.dart';
 import 'package:techblog/view/my_cats.dart';
 
 class RegisterIntro extends StatelessWidget {

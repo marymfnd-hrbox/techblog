@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:techblog/component/my_component.dart';
+import 'package:techblog/constant/my_strings.dart';
 import 'package:techblog/gen/assets.gen.dart';
-import 'package:techblog/component/my_colors.dart';
+import 'package:techblog/constant/my_colors.dart';
 import 'package:techblog/view/home_screen.dart';
 import 'package:techblog/view/profile_screen.dart';
 import 'package:techblog/view/register_intro.dart';
 
-class home extends StatefulWidget {
-  const home({super.key});
+class MainScreen extends StatelessWidget {
+  RxInt selectedPageIndex = 0.obs;
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
 
-  @override
-  State<home> createState() => _homeState();
-}
-
-final GlobalKey<ScaffoldState> _key = GlobalKey();
-
-class _homeState extends State<home> {
-  var selectedPageIndex = 0;
+  MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context).textTheme;
     double bodyMargin = size.width / 10;
@@ -48,12 +48,18 @@ class _homeState extends State<home> {
               Divider(color: SolidColors.dividerColor),
               ListTile(
                 title: Text("اشتراک گذاری تک بلاگ", style: theme.displaySmall),
-                onTap: () {},
+                onTap: () async {
+                  await SharePlus.instance.share(
+                    ShareParams(text: MyStrings.shareText),
+                  );
+                },
               ),
               Divider(color: SolidColors.dividerColor),
               ListTile(
                 title: Text("تک بلاگ در گیت هاب", style: theme.displaySmall),
-                onTap: () {},
+                onTap: () {
+                  myLaunchUrl(MyStrings.techBlogGithubUrl);
+                },
               ),
               Divider(color: SolidColors.dividerColor),
             ],
@@ -82,13 +88,15 @@ class _homeState extends State<home> {
       ),
       body: Stack(
         children: [
-          IndexedStack(
-            index: selectedPageIndex,
-            children: [
-              homeScreen(size: size, theme: theme, bodyMargin: bodyMargin),
-              profileScreen(size: size, theme: theme, bodyMargin: bodyMargin),
-              RegisterIntro(),
-            ],
+          Obx(
+            () => IndexedStack(
+              index: selectedPageIndex.value,
+              children: [
+                homeScreen(size: size, theme: theme, bodyMargin: bodyMargin),
+                profileScreen(size: size, theme: theme, bodyMargin: bodyMargin),
+                RegisterIntro(),
+              ],
+            ),
           ),
 
           // Bottom Navigation
@@ -96,9 +104,7 @@ class _homeState extends State<home> {
             size: size,
             bodyMargin: bodyMargin,
             changeScreen: (int value) {
-              setState(() {
-                selectedPageIndex = value;
-              });
+              selectedPageIndex.value = value;
             },
           ),
         ],

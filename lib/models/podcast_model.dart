@@ -20,7 +20,6 @@ class PodcastModel {
 
 
   factory PodcastModel.fromJson(Map<String, dynamic> json) {
-    print("Poster URL: ${ApiUrlConstant.hostDlUrl + (json['poster'] ?? '')}");
 
     return PodcastModel(
       id: json['id'] ?? '',

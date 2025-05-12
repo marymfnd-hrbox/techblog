@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:techblog/component/my_component.dart';
 import 'package:techblog/gen/assets.gen.dart';
-import 'package:techblog/view/main_screen.dart';
+import 'package:techblog/main.dart';
 
 class splashScreen extends StatefulWidget {
   const splashScreen({super.key});
@@ -15,8 +16,7 @@ class _splashScreen extends State<splashScreen> {
   void initState() {
     Future.delayed(Duration(seconds: 3)).then((value) {
       // ignore: use_build_context_synchronously
-      Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (context) => MainScreen()));
+      Get.offAndToNamed(NamedRoute.routeMainScreen);
     });
     super.initState();
   }

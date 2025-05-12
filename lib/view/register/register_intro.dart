@@ -1,12 +1,16 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:techblog/controller/register_controller.dart';
 import 'package:techblog/gen/assets.gen.dart';
 import 'package:techblog/constant/my_strings.dart';
-import 'package:techblog/view/my_cats.dart';
 
+// ignore: must_be_immutable
 class RegisterIntro extends StatelessWidget {
-  const RegisterIntro({super.key});
+  RegisterIntro({super.key});
+
+  var registerController = Get.find<RegisterController>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +83,7 @@ class RegisterIntro extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(24),
                     child: TextField(
+                      controller: registerController.emailTextEditingController,
                       onChanged: (value) {
                         bool isEmail = EmailValidator.validate(value);
                         if (isEmail) {}
@@ -92,8 +97,10 @@ class RegisterIntro extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      registerController.register();
                       Navigator.pop(context);
                       _activateCodeBottomSheet(context, size, theme);
+                      registerController.register();
                     },
                     child: Text("ادامه"),
                   ),
@@ -137,6 +144,8 @@ class RegisterIntro extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(24),
                     child: TextField(
+                      controller:
+                          registerController.activeCodeTextEditingController,
                       onChanged: (value) {
                         bool isEmail = EmailValidator.validate(value);
                         if (isEmail) {}
@@ -150,9 +159,7 @@ class RegisterIntro extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => MyCats()),
-                      );
+                      registerController.verify();
                     },
                     child: Text("ادامه"),
                   ),

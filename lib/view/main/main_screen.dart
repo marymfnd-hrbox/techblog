@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:techblog/component/my_component.dart';
 import 'package:techblog/constant/my_strings.dart';
+import 'package:techblog/controller/register_controller.dart';
 import 'package:techblog/gen/assets.gen.dart';
 import 'package:techblog/constant/my_colors.dart';
-import 'package:techblog/view/home_screen.dart';
-import 'package:techblog/view/profile_screen.dart';
-import 'package:techblog/view/register_intro.dart';
+import 'package:techblog/view/main/home_screen.dart';
+import 'package:techblog/view/main/profile_screen.dart';
+import 'package:techblog/view/register/register_intro.dart';
 
+// ignore: must_be_immutable
 class MainScreen extends StatelessWidget {
   RxInt selectedPageIndex = 0.obs;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
@@ -17,8 +19,6 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context).textTheme;
     double bodyMargin = size.width / 10;
@@ -100,12 +100,17 @@ class MainScreen extends StatelessWidget {
           ),
 
           // Bottom Navigation
-          BottomNavigation(
-            size: size,
-            bodyMargin: bodyMargin,
-            changeScreen: (int value) {
-              selectedPageIndex.value = value;
-            },
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: BottomNavigation(
+              size: size,
+              bodyMargin: bodyMargin,
+              changeScreen: (int value) {
+                selectedPageIndex.value = value;
+              },
+            ),
           ),
         ],
       ),
@@ -127,57 +132,54 @@ class BottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        height: size.height / 10,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: GradientColors.bottomNavBackground,
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+    return Container(
+      height: size.height / 10,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: GradientColors.bottomNavBackground,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            right: bodyMargin,
-            left: bodyMargin,
-            bottom: 27,
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          right: bodyMargin,
+          left: bodyMargin,
+          bottom: 27,
+        ),
+        child: Container(
+          height: size.height / 8,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(18)),
+            gradient: LinearGradient(colors: GradientColors.bottomNav),
           ),
-          child: Container(
-            height: size.height / 8,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(18)),
-              gradient: LinearGradient(colors: GradientColors.bottomNav),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  onPressed: () => changeScreen(0),
-                  icon: ImageIcon(
-                    Assets.icons.home.provider(),
-                    color: Colors.white,
-                  ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                onPressed: () => changeScreen(0),
+                icon: ImageIcon(
+                  Assets.icons.home.provider(),
+                  color: Colors.white,
                 ),
-                IconButton(
-                  onPressed: () => changeScreen(2),
-                  icon: ImageIcon(
-                    Assets.icons.write.provider(),
-                    color: Colors.white,
-                  ),
+              ),
+              IconButton(
+                onPressed: () {
+                  Get.find<RegisterController>().toggleLogin();
+                },
+                icon: ImageIcon(
+                  Assets.icons.write.provider(),
+                  color: Colors.white,
                 ),
-                IconButton(
-                  onPressed: () => changeScreen(1),
-                  icon: ImageIcon(
-                    Assets.icons.user.provider(),
-                    color: Colors.white,
-                  ),
+              ),
+              IconButton(
+                onPressed: () => changeScreen(1),
+                icon: ImageIcon(
+                  Assets.icons.user.provider(),
+                  color: Colors.white,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
